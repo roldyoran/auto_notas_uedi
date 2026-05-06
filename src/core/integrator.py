@@ -122,8 +122,14 @@ class GradeIntegrator:
             hoja_result.fields,
         )
 
-        self._logger.header("PROCESO COMPLETADO")
-        self._logger.success(f"Archivo de salida: {self._paths.output_csv}")
+        self._logger.separator()
+        self._logger.header("RESUMEN")
+        self._logger.success(f" Total de registros: {result.total_read}")
+        self._logger.success(f"Actualizados: {result.updated}")
+        if result.unmatched:
+            self._logger.warning(f"Sin coincidencia: {len(result.unmatched)}")
+        self._logger.success(f"Archivo guardado: {self._paths.output_csv}")
+        self._logger.separator()
 
         return result
 
