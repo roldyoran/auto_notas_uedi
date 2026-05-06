@@ -25,7 +25,7 @@ calificacion_notas_uedi/
 ## Instalación
 
 ```bash
-uv sync --extra dev
+uv sync
 ```
 
 ## Uso
@@ -48,8 +48,11 @@ Columnas requeridas:
 - `Numero de ID` - Identificador del estudiante
 - `Calificacion` - Columna a actualizar
 
-## tests
+## Tests (opcional)
+
+Para ejecutar tests, instalar con dev dependencies:
 
 ```bash
+uv sync --extra dev
 uv run pytest
 ```
