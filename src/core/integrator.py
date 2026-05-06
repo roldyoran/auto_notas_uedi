@@ -9,6 +9,12 @@ from src.io.paths import PathConfig
 from src.utils.logger import Logger
 from src.utils.normalizers import buscar_columna
 
+try:
+    from src.utils.rich_output import print_resumen
+    RICH_DISPONIBLE = True
+except ImportError:
+    RICH_DISPONIBLE = False
+
 
 @dataclass
 class RegistroSinMatch:
@@ -122,15 +128,23 @@ class GradeIntegrator:
             hoja_result.fields,
         )
 
-        self._logger.separator()
-        self._logger.header("RESUMEN")
-        self._logger.success(f" Total de registros: {result.total_read}")
-        self._logger.success(f"Actualizados: {result.updated}")
-        if result.unmatched:
-            self._logger.warning(f"Sin coincidencia: {len(result.unmatched)}")
-        self._logger.separator()
-        self._logger.banner(" Proceso completado exitosamente! ")
-        self._logger.success(f"{self._paths.output_csv}")
+        if RICH_DISPONIBLE:
+            print_resumen(
+                result.total_read,
+                result.updated,
+                len(result.unmatched),
+                str(self._paths.output_csv),
+            )
+        else:
+            self._logger.separator()
+            self._logger.header("RESUMEN")
+            self._logger.success(f" Total de registros: {result.total_read}")
+            self._logger.success(f"Actualizados: {result.updated}")
+            if result.unmatched:
+                self._logger.warning(f"Sin coincidencia: {len(result.unmatched)}")
+            self._logger.separator()
+            self._logger.banner(" Proceso completado exitosamente! ")
+            self._logger.success(f"{self._paths.output_csv}")
 
         return result
 
