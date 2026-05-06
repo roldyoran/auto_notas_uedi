@@ -13,7 +13,7 @@ from src.utils.rich_output import (
     print_exito,
     print_advertencia,
     print_error,
-    print_subpaso,
+    print_substep,
     print_resumen,
     mostrar_menu,
     pedir_ruta,

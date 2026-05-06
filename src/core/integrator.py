@@ -16,8 +16,6 @@ from src.utils.rich_output import (
     print_error,
     print_substep,
     print_resumen,
-    mostrar_menu,
-    pedir_ruta,
 )
 
 

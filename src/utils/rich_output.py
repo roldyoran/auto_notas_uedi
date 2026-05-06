@@ -42,12 +42,9 @@ def print_error(mensaje: str) -> None:
     console.print(f"[red]X {mensaje}[/red]")
 
 
-def print_subpaso(mensaje: str) -> None:
+def print_substep(mensaje: str) -> None:
     """Imprime un subpaso."""
     console.print(f"     - {mensaje}")
-
-
-print_substep = print_subpaso
 
 
 def print_menu() -> None:
