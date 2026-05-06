@@ -1,38 +1,53 @@
 # AGENTS.md
 
-## Proyecto: Integracion de Calificaciones UEDi
+## Proyecto: Subir Calificaciones UEDi
 
 ### Comandos
 
 ```bash
-# Crear entorno virtual
-uv venv
-
-# Instalar dependencias
-uv sync
+# Instalar dependencias (incluye dev para tests)
+uv sync --extra dev
 
 # Ejecutar integracion
-uv run integrar_notas.py
+uv run main.py
+
+# Ejecutar tests
+uv run pytest
+
+# Ejecutar un test especifico
+uv run pytest tests/test_normalizers.py -v
 ```
 
-### Estructura obligatoria
+### Estructura
 
 ```
-notas-uedi/
+calificacion_notas_uedi/
+├── main.py                    # Entry point (delega a src/)
+├── src/
+│   ├── __init__.py
+│   ├── main.py               # Funcion principal
+│   ├── core/
+│   │   ├── integrator.py    # Logica de integracion
+│   │   └── matcher.py       # Matching de IDs a notas
+│   ├── io/
+│   │   ├── csv_handler.py   # Lectura/escritura CSV
+│   │   └── paths.py       # Gestión de rutas
+│   └── utils/
+│       ├── normalizers.py  # Normalizacion de texto/IDs
+│       └── logger.py      # Logging estructurado
 ├── datos/
-│   ├── notas.csv        # columnas: carnet, nota
-│   └── hoja_uedi.csv    # columnas: Numero de ID, Calificacion
-└── integrar_notas.py
+│   ├── notas.csv         # columnas: carnet, nota
+│   └── hoja_uedi.csv     # columnas: Numero de ID, Calificacion
+└── tests/
+    ├── test_normalizers.py
+    └── test_matcher.py
 ```
-
-### Archivo de salida
-
-`hoja_uedi_llenada_con_notas.csv` se genera en la raiz (no en datos/).
 
 ### Notas para agentes
 
-- UTF-8 con BOM (`\ufeff`) requerido para Excel
-- Columnas se normalizan (tildes compatibles)
-- ID matching intenta multiples normalizaciones (0-leading, trim)
-- 2 IDs sin matchson normales (formato UEDi inconsistente)
-- No requiere packages externos (solo stdlib)
+- **Naming**: Todo el código usa nombres en español (`leer_csv`, `buscar_columna`, `normalizar_id`, etc.)
+- **UTF-8 BOM**: `\ufeff` requerido para Excel
+- **Normalización**: columnas con tildes compatibles, IDs con múltiples variantes (0-leading, trim)
+- **Output**: `hoja_uedi_llenada_con_notas.csv` se genera en la raíz
+- **Dependencias**: solo stdlib + pytest (dev)
+- **Python**: 3.11+ requerido
