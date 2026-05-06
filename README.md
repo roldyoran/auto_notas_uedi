@@ -1,49 +1,40 @@
-# Integracion de Calificaciones UEDI
+# Subir Calificaciones UEDi
 
-Script Python para integrar calificaciones a UEDI
-Este script lee los archivos `notas.csv`, un archivo que usted como aux debe crear y `hoja_uedi.csv`, que es el archivo exportado de UEDi con el nombre cambiado para un uso mas sencillo.
+Script Python para subir calificaciones a UEDi desde un archivo de notas.
 
-## Estructura de Archivos
+## Estructura
 
 ```
-notas-uedi/
+calificacion_notas_uedi/
+├── main.py                    # Entry point
+├── src/                      # Paquete modular
+│   ├── core/                 # Lógica de negocio
+│   ├── io/                   # I/O de archivos
+│   └── utils/                # Utilidades
 ├── datos/
-│   ├── notas.csv        # Archivo con carnet y notas
-│   └── hoja_uedi.csv   # Archivo exportado de UEDi
-├── integrar_notas.py    # Script de integracion
-├── .venv/             # Entorno virtual
-└── hoja_uedi_llenada_con_notas.csv  # Archivo de salida
+│   ├── notas.csv             # columnas: carnet, nota
+│   └── hoja_uedi.csv        # columnas: Numero de ID, Calificacion
+└── hoja_uedi_llenada_con_notas.csv  # Output
 ```
 
 ## Requisitos
 
-- Python 3.10+
-- UV (administrador de paquetes)
+- Python 3.11+
+- UV
 
-## Instalacion
+## Instalación
 
-1. Crear el entorno virtual:
-   ```bash
-   uv sync
-   uv venv
-   ```
-
-2. No es necesario instalar paquetes adicionales (solo stdlib)
+```bash
+uv sync --extra dev
+```
 
 ## Uso
 
-1. Colocar los archivos CSV en la carpeta `datos/`:
-   - `datos/notas.csv` - Debe tener columnas: `carnet`, `nota`
-   - `datos/hoja_uedi.csv` - Archivo exportado de UEDi
+```bash
+uv run main.py
+```
 
-2. Ejecutar el script:
-   ```bash
-   uv run integrar_notas.py
-   ```
-
-3. El archivo de salida `hoja_uedi_llenada_con_notas.csv` se generara en la raiz
-
-## Formato de Archivo notas.csv
+## Formato de notas.csv
 
 ```csv
 carnet,nota
@@ -51,30 +42,14 @@ carnet,nota
 201602659,85.00
 ```
 
-## Formato de Archivo hoja_uedi.csv
+## Formato de hoja_uedi.csv
 
-El archivo debe contener las columnas:
+Columnas requeridas:
 - `Numero de ID` - Identificador del estudiante
-- `Calificacion` - Columna a actualizar (puede estar vacia)
+- `Calificacion` - Columna a actualizar
 
-## Mensajes en Consola
+## tests
 
-El script mostrara:
-- Cantidad de registros leidos
-- IDs encontrados y actualizados
-- IDs sin coincidencia (si los hay)
-- Advertencia si hay archivos que revisar manualmente
-
-## Solucionar Problemas
-
-### "No se encontro la carpeta 'datos/'"
-- Crear una carpeta llamada `datos` en la raiz del proyecto
-- Colocar `notas.csv` y `hoja_uedi.csv` dentro
-
-### "No se encontro la columna 'Calificacion'"
-- Verificar que el archivo tenga exactamente esa columna
-- El nombre es sensible a mayusculas/minusculas pero soporta tildes
-
-### IDs sin coincidencia
-- Revisar manualmente los IDs listados en la salida
-- Puede haber errores de formato entre los sistemas
+```bash
+uv run pytest
+```
