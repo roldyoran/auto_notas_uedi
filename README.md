@@ -4,8 +4,8 @@
 
 Script en Python para automatizar la carga de calificaciones en UEDI a partir de un archivo CSV de notas.
 
-Ingresar calificaciones manualmente en UEDI puede ser un proceso repetitivo y aburrido.  
-Este script simplifica esa tarea: solo necesitas descargar la hoja de trabajo calificadora del proyecto, preparar el archivo `notas.csv` con el formato requerido y ejecutar el programa para completar automáticamente las calificaciones correspondientes.
+Todos sabemos que ingresar calificaciones manualmente en UEDI puede ser un proceso repetitivo y aburrido.  
+Este script simplifica esa tarea, solo necesitas descargar la hoja de trabajo calificadora de la tarea a ingresar notas, preparar el archivo `notas.csv` con el formato requerido y ejecutar el programa para completar automáticamente las calificaciones correspondientes.
 
 ![Hoja calificadora](imgs/hoja_calificadora.png)
 
@@ -34,7 +34,7 @@ Columnas requeridas:
 - `Numero de ID`: identificador del estudiante
 - `Calificacion`: columna a actualizar
 
-No es necesario modificar nada de la hoja de trabajo cacalificadora ya el programa se encargará de buscar el número de carnet en la columna `Numero de ID` y actualizar la columna `Calificacion` con la nota correspondiente del archivo `notas.csv`.
+No es necesario modificar nada de la hoja de trabajo calificadora ya el programa se encargará de buscar el número de carnet en la columna `Numero de ID` y actualizar la columna `Calificacion` con la nota correspondiente del archivo `notas.csv`.
 
 ## Estructura del proyecto
 
@@ -85,6 +85,14 @@ uv run main.py -n ruta/notas.csv -h ruta/hoja_uedi.csv
 uv sync --extra dev
 uv run pytest
 ```
+
+## Casos de Errores
+
+- Si un número de carnet en `notas.csv` no se encuentra en `hoja_uedi.csv`, se mostrará un mensaje de advertencia pero el programa continuará ejecutándose.
+- En dado caso surga un error con carnets duplicados o mal formateados, el programa indicará el problema específico y te dira el nombre del estudiante para que lo busques en el archivo de salida `hoja_uedi_llenada_con_notas.csv` y lo corrijas manualmente.
+- Si el formato de los archivos CSV no es correcto (por ejemplo, columnas faltantes), el programa mostrará un mensaje de error y se detendrá.
+- Si el archivo `hoja_uedi.csv` no tiene la codificación UTF-8 con BOM, el programa puede no reconocer los caracteres correctamente, lo que puede resultar en errores de lectura o escritura. Asegúrate de guardar el archivo con la codificación correcta para evitar problemas.
+
 
 ## Autoría
 
