@@ -5,35 +5,49 @@ from pathlib import Path
 from rich.console import Console
 from rich.table import Table
 from rich.prompt import Prompt
-from rich.theme import Theme
 
 
-custom_theme = Theme({
-    "info": "cyan",
-    "warning": "yellow",
-    "error": "red",
-    "success": "green",
-})
+console = Console()
 
 
-console = Console(theme=custom_theme)
+def print_encabezado(titulo: str) -> None:
+    """Imprime el encabezado principal."""
+    console.print(f"\n[bold cyan]{'=' * 50}[/bold cyan]")
+    console.print(f"[bold cyan]{titulo:^50}[/bold cyan]")
+    console.print(f"[bold cyan]{'=' * 50}[/bold cyan]")
 
 
-def print_resumen(total: int, actualizados: int, sin_match: int, ruta: str) -> None:
-    """Imprime el resumen con tabla de Rich."""
-    table = Table(title="[bold green]RESUMEN[/bold green]", show_header=False)
+def print_paso(numero: int, mensaje: str) -> None:
+    """Imprime un paso del proceso."""
+    console.print(f"\n[yellow bold]({numero})[/yellow bold] [bold]{mensaje}[/bold]")
 
-    table.add_column("", style="bold")
-    table.add_column("", style="")
 
-    table.add_row("Total de registros", str(total))
-    table.add_row("Actualizados", f"[green]{actualizados}[/green]")
-    if sin_match > 0:
-        table.add_row("Sin coincidencia", f"[yellow]{sin_match}[/yellow]")
+def print_info(mensaje: str) -> None:
+    """Imprime un mensaje de info."""
+    console.print(f"[cyan]{mensaje}[/cyan]")
 
-    console.print(table)
-    console.print(f"\n[bold green]Proceso completado exitosamente![/bold green]\n")
-    console.print(f"  [blue]{ruta}[/blue]")
+
+def print_exito(mensaje: str) -> None:
+    """Imprime un mensaje de exito."""
+    console.print(f"[green]OK {mensaje}[/green]")
+
+
+def print_advertencia(mensaje: str) -> None:
+    """Imprime una advertencia."""
+    console.print(f"[yellow]! {mensaje}[/yellow]")
+
+
+def print_error(mensaje: str) -> None:
+    """Imprime un error."""
+    console.print(f"[red]X {mensaje}[/red]")
+
+
+def print_subpaso(mensaje: str) -> None:
+    """Imprime un subpaso."""
+    console.print(f"     - {mensaje}")
+
+
+print_substep = print_subpaso
 
 
 def print_menu() -> None:
@@ -54,8 +68,8 @@ def print_menu() -> None:
     console.print()
 
 
-def pedir_ruta_rich(tipo: str) -> Path:
-    """Pide una ruta de archivo CSV usando Rich."""
+def pedir_ruta(tipo: str) -> Path:
+    """Pide una ruta de archivo CSV."""
     console.print(f"[bold]Ingrese la ruta al archivo {tipo}.csv:[/bold]")
 
     while True:
@@ -79,8 +93,8 @@ def pedir_ruta_rich(tipo: str) -> Path:
         return ruta
 
 
-def mostrar_menu_rich() -> tuple[Path | None, Path | None]:
-    """Muestra el menú interactivo estilizado."""
+def mostrar_menu() -> tuple[Path | None, Path | None]:
+    """Muestra el menú interactivo."""
     while True:
         print_menu()
 
@@ -93,16 +107,35 @@ def mostrar_menu_rich() -> tuple[Path | None, Path | None]:
         if eleccion == "1":
             return None, None
         elif eleccion == "2":
-            ruta = pedir_ruta_rich("notas")
+            ruta = pedir_ruta("notas")
             return ruta, None
         elif eleccion == "3":
-            ruta = pedir_ruta_rich("hoja")
+            ruta = pedir_ruta("hoja")
             return None, ruta
         elif eleccion == "4":
-            ruta_notas = pedir_ruta_rich("notas")
-            ruta_hoja = pedir_ruta_rich("hoja")
+            ruta_notas = pedir_ruta("notas")
+            ruta_hoja = pedir_ruta("hoja")
             return ruta_notas, ruta_hoja
         elif eleccion == "5":
             console.print("[cyan]Saliendo...[/cyan]")
             import sys
             sys.exit(0)
+
+
+def print_resumen(total: int, actualizados: int, sin_match: int, ruta: str) -> None:
+    """Imprime el resumen final."""
+    console.print()
+
+    table = Table(title="[bold green]RESUMEN[/bold green]", show_header=False)
+
+    table.add_column("")
+    table.add_column("")
+
+    table.add_row("Total de registros", str(total))
+    table.add_row("Actualizados", f"[green]{actualizados}[/green]")
+    if sin_match > 0:
+        table.add_row("Sin coincidencia", f"[yellow]{sin_match}[/yellow]")
+
+    console.print(table)
+    console.print(f"[bold green]Proceso completado exitosamente![/bold green]\n")
+    console.print(f"  [blue]{ruta}[/blue]")

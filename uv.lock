@@ -4,7 +4,7 @@ requires-python = ">=3.11"
 
 [[package]]
 name = "calificacion-notas-uedi"
-version = "0.2.0"
+version = "0.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "rich" },
@@ -14,17 +14,13 @@ dependencies = [
 dev = [
     { name = "pytest" },
 ]
-rich = [
-    { name = "rich" },
-]
 
 [package.metadata]
 requires-dist = [
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
-    { name = "rich", specifier = ">=15.0.0" },
-    { name = "rich", marker = "extra == 'rich'", specifier = ">=13.0.0" },
+    { name = "rich", specifier = ">=13.0.0" },
 ]
-provides-extras = ["dev", "rich"]
+provides-extras = ["dev"]
 
 [[package]]
 name = "colorama"
