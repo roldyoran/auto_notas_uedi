@@ -1,6 +1,6 @@
 # AGENTS.md
 
-## Proyecto: Subir Calificaciones UEDi
+## Proyecto: auto_notas_uedi
 
 ### Comandos
 
@@ -27,7 +27,7 @@ uv run pytest
 ### Estructura
 
 ```
-calificacion_notas_uedi/
+auto_notas_uedi/
 ├── main.py                    # Entry point
 ├── src/
 │   ├── __init__.py
@@ -48,6 +48,10 @@ calificacion_notas_uedi/
     ├── test_normalizers.py
     └── test_matcher.py
 ```
+
+### Autoría
+
+Desarrollado por @roldyoran
 
 ### Notas para agentes
 

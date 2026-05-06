@@ -1,5 +1,5 @@
 [project]
-name = "calificacion-notas-uedi"
+name = "auto_notas_uedi"
 version = "0.3.0"
 description = "Script para integrar calificaciones en UEDI"
 readme = "README.md"
