@@ -46,7 +46,6 @@ def main() -> int:
 
     try:
         base_dir = Path(__file__).parent
-        print_encabezado("SUBIR CALIFICACIONES")
 
         if ruta_notas or ruta_hoja:
             datos_dir = base_dir / "datos"

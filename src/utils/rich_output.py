@@ -135,4 +135,4 @@ def print_resumen(total: int, actualizados: int, sin_match: int, ruta: str) -> N
 
     console.print(table)
     console.print(f"[bold green]Proceso completado exitosamente![/bold green]\n")
-    console.print(f"  [blue]{ruta}[/blue]")
+    console.print(f"  [bold green]{ruta}[/bold green]")
