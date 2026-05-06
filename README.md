@@ -7,10 +7,10 @@ Script Python para subir calificaciones a UEDi desde un archivo de notas.
 ```
 calificacion_notas_uedi/
 ├── main.py                    # Entry point
-├── src/                      # Paquete modular
-│   ├── core/                 # Lógica de negocio
+├── src/
+│   ├── core/                 # Logica de negocio
 │   ├── io/                   # I/O de archivos
-│   └── utils/                # Utilidades
+│   └── utils/                # Utilidades (Rich)
 ├── datos/
 │   ├── notas.csv             # columnas: carnet, nota
 │   └── hoja_uedi.csv        # columnas: Numero de ID, Calificacion
@@ -20,7 +20,7 @@ calificacion_notas_uedi/
 ## Requisitos
 
 - Python 3.11+
-- UV
+- UV (gestor de paquetes)
 
 ## Instalación
 
@@ -31,7 +31,14 @@ uv sync
 ## Uso
 
 ```bash
+# Ejecutar con archivos por defecto (datos/)
 uv run main.py
+
+# Menu interactivo
+uv run main.py -menu
+
+# Con rutas personalizadas
+uv run main.py -n ruta/notas.csv -h ruta/hoja_uedi.csv
 ```
 
 ## Formato de notas.csv
@@ -49,8 +56,6 @@ Columnas requeridas:
 - `Calificacion` - Columna a actualizar
 
 ## Tests (opcional)
-
-Para ejecutar tests, instalar con dev dependencies:
 
 ```bash
 uv sync --extra dev

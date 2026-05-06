@@ -5,39 +5,45 @@
 ### Comandos
 
 ```bash
-# Instalar dependencias (incluye dev para tests)
+# Instalar dependencias
+uv sync
+
+# Instalar con tests
 uv sync --extra dev
 
 # Ejecutar integracion
 uv run main.py
 
+# Menu interactivo
+uv run main.py -menu
+
+# Con rutas personalizadas
+uv run main.py -n datos/notas.csv -h datos/hoja_uedi.csv
+
 # Ejecutar tests
 uv run pytest
-
-# Ejecutar un test especifico
-uv run pytest tests/test_normalizers.py -v
 ```
 
 ### Estructura
 
 ```
 calificacion_notas_uedi/
-├── main.py                    # Entry point (delega a src/)
+├── main.py                    # Entry point
 ├── src/
 │   ├── __init__.py
-│   ├── main.py               # Funcion principal
+│   ├── main.py
 │   ├── core/
 │   │   ├── integrator.py    # Logica de integracion
-│   │   └── matcher.py       # Matching de IDs a notas
+│   │   └── matcher.py       # Matching de IDs
 │   ├── io/
 │   │   ├── csv_handler.py   # Lectura/escritura CSV
-│   │   └── paths.py       # Gestión de rutas
+│   │   └── paths.py        # Gestion de rutas
 │   └── utils/
-│       ├── normalizers.py  # Normalizacion de texto/IDs
-│       └── logger.py      # Logging estructurado
+│       ├── normalizers.py # Normalizacion de texto/IDs
+│       └── rich_output.py  # Salida estilizada con Rich
 ├── datos/
-│   ├── notas.csv         # columnas: carnet, nota
-│   └── hoja_uedi.csv     # columnas: Numero de ID, Calificacion
+│   ├── notas.csv            # columnas: carnet, nota
+│   └── hoja_uedi.csv       # columnas: Numero de ID, Calificacion
 └── tests/
     ├── test_normalizers.py
     └── test_matcher.py
@@ -45,9 +51,9 @@ calificacion_notas_uedi/
 
 ### Notas para agentes
 
-- **Naming**: Todo el código usa nombres en español (`leer_csv`, `buscar_columna`, `normalizar_id`, etc.)
+- **Rich**: Dependencia requerida (no opcional)
+- **Naming**: Todo el codigo usa nombres en español
+- **CLI args**: `-menu`, `-n/--notas`, `-h/--hoja`
 - **UTF-8 BOM**: `\ufeff` requerido para Excel
-- **Normalización**: columnas con tildes compatibles, IDs con múltiples variantes (0-leading, trim)
-- **Output**: `hoja_uedi_llenada_con_notas.csv` se genera en la raíz
-- **Dependencias**: solo stdlib + pytest (dev)
+- **Output**: `hoja_uedi_llenada_con_notas.csv` en la raiz
 - **Python**: 3.11+ requerido
