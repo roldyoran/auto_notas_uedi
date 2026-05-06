@@ -9,6 +9,12 @@ from src.core.integrator import GradeIntegrator
 from src.io.paths import PathConfig
 from src.utils.logger import Logger
 
+try:
+    from src.utils.rich_output import mostrar_menu_rich
+    RICH_DISPONIBLE = True
+except ImportError:
+    RICH_DISPONIBLE = False
+
 
 def mostrar_menu(logger: Logger) -> tuple[Path | None, Path | None]:
     """Muestra el menú interactivo para configurar rutas."""
@@ -102,7 +108,10 @@ def main() -> int:
     ruta_hoja = None
 
     if "-menu" in args:
-        ruta_notas, ruta_hoja = mostrar_menu(logger)
+        if RICH_DISPONIBLE:
+            ruta_notas, ruta_hoja = mostrar_menu_rich()
+        else:
+            ruta_notas, ruta_hoja = mostrar_menu(logger)
     else:
         for i, arg in enumerate(args):
             if arg in ("-n", "--notas") and i + 1 < len(args):
