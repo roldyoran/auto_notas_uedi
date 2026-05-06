@@ -55,6 +55,12 @@ class Logger:
         """Log mensaje de success."""
         self._print(NivelLog.SUCCESS, message)
 
+    def banner(self, message: str, width: int = 50) -> None:
+        """Imprime un mensaje de exito estilizado."""
+        print(f"\n{'-' * width}", file=self._output)
+        print(f"  {message}", file=self._output)
+        print(f"{'-' * width}\n", file=self._output)
+
     def header(self, title: str, width: int = 76) -> None:
         """Imprime un encabezado.
 

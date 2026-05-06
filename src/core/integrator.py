@@ -128,8 +128,9 @@ class GradeIntegrator:
         self._logger.success(f"Actualizados: {result.updated}")
         if result.unmatched:
             self._logger.warning(f"Sin coincidencia: {len(result.unmatched)}")
-        self._logger.success(f"Archivo guardado: {self._paths.output_csv}")
         self._logger.separator()
+        self._logger.banner(" Proceso completado exitosamente! ")
+        self._logger.success(f"{self._paths.output_csv}")
 
         return result
 
