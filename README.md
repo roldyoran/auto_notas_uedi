@@ -1,4 +1,4 @@
-# auto-notas-uedi
+# auto_notas_uedi
 
 ## Automatización de calificaciones en UEDI
 
