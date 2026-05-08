@@ -58,6 +58,7 @@ Desarrollado por @roldyoran
 - **Rich**: Dependencia requerida (no opcional)
 - **Naming**: Todo el codigo usa nombres en español
 - **CLI args**: `-menu`, `-n/--notas`, `-h/--hoja`
-- **UTF-8 BOM**: `\ufeff` requerido para Excel
+- **UTF-8 BOM**: Se maneja automaticamente con `utf-8-sig`
 - **Output**: `hoja_uedi_llenada_con_notas.csv` en la raiz
 - **Python**: 3.11+ requerido
+- **Matching**: Maneja variantes de IDs (con/sin ceros, 8/9 digitos)

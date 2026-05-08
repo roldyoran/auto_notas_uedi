@@ -60,6 +60,8 @@ def normalizar_id(id_valor: str | None) -> str:
     if id_valor is None:
         return ""
     id_str = str(id_valor).strip()
+    if len(id_str) > 9:
+        id_str = id_str[-9:]
     while len(id_str) > 1 and id_str.startswith("0"):
         id_str = id_str[1:]
     return id_str
@@ -80,17 +82,26 @@ def obtener_variantes_id(id_valor: str) -> list[str]:
     """
     variantes: set[str] = {id_valor}
 
+    if len(id_valor) > 9:
+        ultimos_9 = id_valor[-9:]
+        variantes.add(ultimos_9)
+
     id_norm = normalizar_id(id_valor)
     if id_norm != id_valor:
         variantes.add(id_norm)
 
     if len(id_valor) == 9:
-        if id_valor[0] == "1":
-            variantes.add("0" + id_valor[1:])
-        if id_valor[0] == "0":
+        if id_valor.startswith("00"):
             variantes.add("1" + id_valor[1:])
+        elif id_valor[0] == "0":
+            variantes.add("1" + id_valor[1:])
+        elif id_valor[0] == "1":
+            variantes.add("0" + id_valor[1:])
 
-    if len(id_norm) == 8:
-        variantes.add("1" + id_norm)
+    if len(id_valor) == 9 and id_valor.startswith("00"):
+        variantes.add("19" + id_valor[2:])
+
+    if len(id_valor) == 8:
+        variantes.add("1" + id_valor)
 
     return list(variantes)

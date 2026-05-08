@@ -60,7 +60,6 @@ def escribir_csv(
     path = Path(ruta)
 
     with open(path, mode="w", encoding="utf-8-sig", newline="") as archivo:
-        archivo.write(UTF8_BOM)
         escritor = csv.DictWriter(archivo, fieldnames=campos)
         escritor.writeheader()
         escritor.writerows(registros)

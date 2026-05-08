@@ -89,9 +89,10 @@ uv run pytest
 ## Casos de Errores
 
 - Si un número de carnet en `notas.csv` no se encuentra en `hoja_uedi.csv`, se mostrará un mensaje de advertencia pero el programa continuará ejecutándose.
+- El programa maneja automáticamente variantes de IDs (con ceros al inicio, 8 o 9 dígitos). Si un ID no coincide, se asignará 0 y deberá corregirse manualmente en el archivo de salida.
 - En dado caso surga un error con carnets duplicados o mal formateados, el programa indicará el problema específico y te dira el nombre del estudiante para que lo busques en el archivo de salida `hoja_uedi_llenada_con_notas.csv` y lo corrijas manualmente.
 - Si el formato de los archivos CSV no es correcto (por ejemplo, columnas faltantes), el programa mostrará un mensaje de error y se detendrá.
-- Si el archivo `hoja_uedi.csv` no tiene la codificación UTF-8 con BOM, el programa puede no reconocer los caracteres correctamente, lo que puede resultar en errores de lectura o escritura. Asegúrate de guardar el archivo con la codificación correcta para evitar problemas.
+- El archivo de salida se genera con codificación UTF-8 con BOM para compatibilidad con Moodle/Excel.
 
 
 ## Autoría
